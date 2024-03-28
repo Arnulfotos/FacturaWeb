@@ -1,0 +1,102 @@
+﻿@model FacturaWeb.Models.FacturaViewModel.FacturaIndexData
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Facturas</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               #
+            </th>
+            <th>
+                Feacha de Alta
+            </th>
+            <th>
+                Total
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Facturas) {
+        <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FacturaID)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaAlta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalPago)
+            </td>
+            <td>
+                    <a asp-page="/" asp-route-id="@item.FacturaID">Select</a> |
+                <a asp-action="Edit" asp-route-id="@item.FacturaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.FacturaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.FacturaID">Delete</a>
+            </td>
+        </tr>
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+    </tbody>
+</table>
+@if (Model.FacturaDetalles != null)
+{
+
+    if (Model.FacturaDetalles.Count() == 0)
+    {
+        <small class="text-secondary">Factura no tiene productos</small>
+
+
+    }
+    else
+    {
+
+
+
+        
+        <table class="table">
+            <tr>
+            </tr>
+
+            @foreach (var item in Model.FacturaDetalles)
+            {
+                string selectedRow = "table-success";
+                /*if (item.FacturaID == Model.Fac)
+                {
+                    selectedRow = "table-success";
+                } */
+                <tr class="@selectedRow">
+                    <td>
+                        @item.Producto.Descripcion
+                    </td>
+                    <td>
+                        @item.Precio
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
